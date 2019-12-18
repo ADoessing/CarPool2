@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <style>
+            .navbar {
+                margin-bottom: 0;
+                border-radius: 0;
+            }
+
+            .row.content {
+                height: 450px
+            }
+
+            .sidenav {
+                padding-top: 20px;
+                background-color: #f1f1f1;
+                height: 100%;
+            }
+
+            footer {
+                background-color: #555;
+                color: white;
+                padding: 15px;
+            }
+
+            @media screen and (max-width: 767px) {
+                .sidenav {
+                    height: auto;
+                    padding: 15px;
+                }
+
+                .row.content {
+                    height: auto;
+                }
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navBar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="#"><i class="fa fa-car"></i></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navBar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index">Home</a></li>
+                        <li><a href="post">Posts</a></li>
+                        <% if (viewbag.loggedin) { %><li><a href="createPool">Create Post</a></li> <% } %>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <% if (!viewbag.loggedin) { %>
+                        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="createUser"><span class="glyphicon glyphicon-sunglasses"></span> Register</a></li>
+                        <% } else { %>
+                        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- NAV-BAR END! -->
+        <div id="header">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Welcome to the best website ever made</h1>
+                    <p class="lead">Here you can create a post or read previous posts </p>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </body>
+
+</html>
