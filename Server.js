@@ -3,6 +3,9 @@ const url = require("url");
 const queryString = require('querystring');
 const ejs = require('ejs');
 const fs = require('fs');
+let count = 0;
+let enabled;
+let email = "";
 
 let sessions = []
 
@@ -94,6 +97,7 @@ dispatch.POST = (request, response) => {
     let loggedin = loggedIn(cookie);
     let session;
     let path = require('path');
+    const { uuid } = require('uuidv4');
 
     request.on('data', data =>{
         message += data.toString();
@@ -105,34 +109,31 @@ dispatch.POST = (request, response) => {
 
         switch (fullPath[1]) {
             case "login":
-                let count = 0;
-                let email = "";
-                let timeout = 12000;
+                let timeout = 24000;
                 let lastExecuted = 0;
                 let date = new Date();
-                let enabled = true;
                 let seconds = 0;
-                session = require(path.join(__dirname,'/services/sessiongenerator.js'));
 
 
-                  if (enabled == true ) {
+                  if (enabled != false) {
 
                     if (!loggedin) {
                         controller = require("./src/controller/login.js");
                         controller.login(loggedin, parsedMessage, (htmlResult, success, userid)=>{
                             if (success){
-                                let sessionID = session.random();
+                                let sessionID = uuid();
                                 response.writeHead(303, {'Location': '/post' ,"Content-Type": "text/html",'Set-Cookie': 'myCookie={"userID": "'+userid+'", "sessionID": "'+sessionID+'"}', "Access-Control-Allow-Origin": '*'});
                                 sessions.push({userID: userid, sessionID: sessionID})
                                 response.end();
                             } else {
+                               // console.log("hjælp");
+                               // console.log(count);
+                               // console.log(email);
                                 count++;
                                 email = parsedMessage.email;
-                                if (count >= 3 && email == parsedMessage.email) {
+                                if (count > 3 && email == parsedMessage.email) {
                                   enabled = false;
                                   seconds = date.getTime();
-                                  response.writeHead(200, {"Content-Type": "text/html", "Access-Control-Allow-Origin": '*'});
-                                  response.end(htmlResult);
                                 }
                                 response.writeHead(200, {"Content-Type": "text/html", "Access-Control-Allow-Origin": '*'});
                                 response.end(htmlResult);
@@ -142,17 +143,22 @@ dispatch.POST = (request, response) => {
                         response.writeHead(401, {"Content-Type": "text/html", "Access-Control-Allow-Origin": '*'});
                         response.end("Access Denied");
                     }
-                    break;
-                  } else {
-                    if ((seconds - lastExecuted) > timeout) {
-                      lastExecuted = seconds;
-                      enabled = true;
-                      response.writeHead(200, {"Content-Type": "text/html", "Access-Control-Allow-Origin": '*'});
-                      response.end(htmlResult);
-                    }
-                    response.writeHead(200, {"Content-Type": "text/html", "Access-Control-Allow-Origin": '*'});
-                    response.end(htmlResult);
                   }
+
+                      if ((seconds - lastExecuted) > timeout) {
+                        lastExecuted = seconds;
+                        enabled = true;
+                        count = 0;
+
+                        controller = require("./src/controller/login.js");
+                        controller.index(loggedin, (htmlResult) => {
+
+                        response.writeHead(200, {"Content-Type": "text/html", "Access-Control-Allow-Origin": '*'});
+                        response.end(htmlResult);
+                        });
+                      }
+
+                  break;
 
 
 

@@ -8,16 +8,17 @@ module.exports.saveUser = (username, email, password, callback) => {
     const query = 'INSERT INTO users(username, email, password) VALUES($1, $2, $3)';
     const values = [username, email, encryptedPW];
 
-    databaseCore.connect((client) => {
-        client.query(query, values, (err, res) => {
-            if(err == null){
-                success = true
-            }
-            client.end();
-            callback(success)
-        });
-    });
+      databaseCore.connect((client) => {
+          client.query(query, values, (err, res) => {
+              if(err == null){
+                  success = true
+              }
+              client.end();
+              callback(success)
+          });
+      });
 }
+
 
 module.exports.getUsers = (callback) => {
     let path = require('path');

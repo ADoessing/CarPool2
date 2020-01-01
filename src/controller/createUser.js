@@ -28,7 +28,7 @@ module.exports.createUser = (loggedin, data, callback) => {
             } else {
                 let htmlRendered = viewRenderer.render('createUser', {loggedin: loggedin});
                 callback(false, htmlRendered)
-            }    
+            }
         });
     } else {
         callback(false, htmlRendered)

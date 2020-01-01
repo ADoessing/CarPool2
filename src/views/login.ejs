@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <script src="../public/js/Login.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <style>
@@ -86,13 +85,13 @@
 
                     <div class="col-xs-2 col-md-offset-7" style="background-color:lavender;">
                         <div class="row">
-                            <form action="login" method="POST" onsubmit="return checkFields()">
+                            <form action="login" method="POST" id="loginform" onsubmit="">
                                 <div class="col">
                                     <label class="form-label h5">Email</label>
-                                    <input type="email" name="email" id="email" class="form-control" />
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email"/>
                                     <div class="col">
                                         <label class="form-label h5">Password</label>
-                                        <input type="password" name="password" class="form-control" id="password" />
+                                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" />
                                         <div class="col">
                                             <input type="submit" name="submit" id="submit" value='Login' class="btn btn-primary btn-block" />
                                         </div>
